@@ -1,6 +1,10 @@
+'use client';
+
 import Breadcrumb from '@/components/breadcrumb';
-import Image from 'next/image';
-import Link from 'next/link';
+import Card from '@/components/card';
+import { useEffect, useState } from 'react';
+import { getMovies } from './api/route';
+import { CircularProgress } from '@mui/material';
 
 export interface Movie {
   id: string;
@@ -9,45 +13,45 @@ export interface Movie {
   poster_path: string;
 }
 
-export default async function MoviesPage() {
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYzg4MmIzYzRhY2E5YzI0ZDZhNDQwNzlkNjVjZGFlMSIsInN1YiI6IjY1ZTljZTBlMzM5NmI5MDE4Njg0YmIwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JXVg7S3Q6wSVphmGXZCkQksy_c6fFzAKPOeY_bpszzI',
-    },
-  };
-  const getMovies = await fetch(
-    'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc',
-    options
-  );
-  const movies = await getMovies.json();
+export default function MoviesPage() {
+  const [movies, setMovies] = useState<Array<Movie>>([]);
+  const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  console.log('data', movies);
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const movies = await getMovies(page);
+      if (movies) {
+        setMovies(movies);
+        setLoading(false);
+      }
+    };
+    fetchMovies();
+  }, [page]);
 
   return (
     <>
-      <Breadcrumb title='Popular Movies' />
+      <Breadcrumb title='Movies' />
+      <button onClick={() => setPage(1)}>Page 1</button>
+      <button onClick={() => setPage(2)}>Page 2</button>
+      <button onClick={() => setPage(3)}>Page 3</button>
+
       <div className='container mx-auto p-5'>
-        <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
-          {movies.results.map(({ id, title, overview, poster_path }: Movie) => (
-            <Link key={id} href={`movies/${id}`} title={title} className='flex flex-col justify-start mb-5'>
-              <Image
-                alt={title}
-                src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-                width={500}
-                height={500}
-                className='w-full'
+        {loading ? (
+          <div className='text-center'><CircularProgress/></div>
+        ) : (
+          <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
+            {movies?.map(({ id, title, overview, poster_path }: Movie) => (
+              <Card
+                key={id}
+                id={id}
+                title={title}
+                overview={overview}
+                poster_path={poster_path}
               />
-              <div className='flex flex-row'>
-                <h2 className='py-2 font-bold flex-1'>{title}</h2>
-                <Link href={`movies/${id}`} title={`${title} Details`}>Details</Link>
-              </div>
-                <p className='py-2 text-xs'>{overview}</p>
-            </Link>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

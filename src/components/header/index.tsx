@@ -1,8 +1,13 @@
+import Navigation from '../navigation';
+
 export default function Header() {
   return (
     <>
-        <div className='text-3xl container mx-auto p-5'>
-          <p>Header</p>
+        <div className='container mx-auto p-5'>
+          <div className='text-3xl'>
+            <p>Movie Friends</p>
+          </div>
+          <Navigation/>
         </div>
     </>
   );
