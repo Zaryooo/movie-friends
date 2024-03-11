@@ -1,6 +1,13 @@
-import { Movie } from '@/app/movies/page';
 import Image from 'next/image';
 import Link from 'next/link';
+
+
+export interface Movie {
+  id: string;
+  title: string;
+  overview: string;
+  poster_path: string;
+}
 
 export default function Card({id, title, overview, poster_path }: Movie) {
     return <>

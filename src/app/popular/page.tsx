@@ -1,32 +1,67 @@
-import Breadcrumb from '@/components/breadcrumb';
-import { Movie } from '../movies/page';
-import Card from '@/components/card';
+'use client';
 
-export default async function PopularPage() {
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYzg4MmIzYzRhY2E5YzI0ZDZhNDQwNzlkNjVjZGFlMSIsInN1YiI6IjY1ZTljZTBlMzM5NmI5MDE4Njg0YmIwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JXVg7S3Q6wSVphmGXZCkQksy_c6fFzAKPOeY_bpszzI',
-    },
+import Breadcrumb from '@/components/breadcrumb';
+import Card from '@/components/card';
+import { useEffect, useState } from 'react';
+import { Movie, getMovies } from './api/route';
+import { CircularProgress } from '@mui/material';
+import { InView, useInView } from 'react-intersection-observer';
+import ScrollToTop from '@/components/scrollToTop';
+
+export default function PopularPage({
+  params: { movies },
+}: {
+  params: { movies: string };
+}) {
+  const [result, setResult] = useState<Array<Movie>>([]);
+  const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(true);
+
+
+  const { ref, inView, entry } = useInView({ threshold: 0 });
+  //const breadcrumb = movies.toString().toLocaleUpperCase();
+  //console.log("entry", entry)
+
+  useEffect(() => {
+    if (inView) {
+      fetchMovies();
+    }
+  }, [inView]);
+
+  const fetchMovies = async () => {
+    setLoading(true);
+    const next = page + 1;
+    const result = await getMovies(page, movies);
+    if (result?.length) {
+      setPage(next);
+      setResult((prev) => [...(prev?.length ? prev : []), ...result]);
+      setLoading(false);
+    }
   };
-  const getMovies = await fetch(
-    'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
-    options
-  );
-  const movies = await getMovies.json();
 
   return (
     <>
-      <Breadcrumb title='Popular Movies' />
+      <Breadcrumb title="Popular" />
       <div className='container mx-auto p-5'>
+        {loading ? (
+          <div className='text-center'>
+            <CircularProgress />
+          </div>
+        ) : null}
         <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
-          {movies.results.map(({ id, title, overview, poster_path }: Movie) => (
-            <Card key={id} id={id} title={title} overview={overview} poster_path={poster_path} />
+          {result?.map(({ id, title, overview, poster_path }: Movie) => (
+            <Card
+              key={id}
+              id={id}
+              title={title}
+              overview={overview}
+              poster_path={poster_path}
+            />
           ))}
         </div>
+        <div ref={ref}>{inView}</div>
       </div>
+      <ScrollToTop />
     </>
   );
 }

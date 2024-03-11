@@ -1,9 +1,9 @@
 import MoviesPage from './movies/page';
 
-export default function Home() {
+export default function Home(children: React.ReactNode) {
   return (
       <div>
-        <MoviesPage/>
+        <MoviesPage params={{movies: "movies"}} />
       </div>
   );
 }

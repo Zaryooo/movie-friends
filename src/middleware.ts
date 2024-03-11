@@ -20,5 +20,9 @@ export function middleware(request: NextRequest) {
 }
 
 // export const config = {
+//     matcher: ['/movies/:path*', '/popular/:path*'],
+//   }
+
+// export const config = {
 //     matcher: "/profile"
 // }

@@ -1,4 +1,8 @@
 
-export default function MoviePage() {
-    return <h1>MoviePage</h1>
+export default function MovieDetailsPage({params: {id}}: {
+    params: { id: string };
+}) {
+
+    
+    return <h1>Movie {id}</h1>
 }

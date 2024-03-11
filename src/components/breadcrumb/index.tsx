@@ -1,9 +1,13 @@
+import { MoviesType } from '@/app/[movies]/api/route';
+
 interface BreadcrumbProps {
     title: string;
     children?: React.ReactNode
 }
 
 export default function Breadcrumb({title, children}: BreadcrumbProps) {
+
+
   return (
     <>
       <div className='breadcrumb relative'>
