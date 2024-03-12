@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 
 export default function scrollToTop() {
   const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
@@ -8,8 +9,8 @@ export default function scrollToTop() {
   }
 
   return (
-    <button className='fixed bottom-0 p-10' onClick={scrollToTop}>
-      To top
-    </button>
+    <Button className='fixed bottom-0 py-2 px-3 m-7' variant="contained" onClick={scrollToTop}>
+      Go To top
+    </Button>
   );
 }

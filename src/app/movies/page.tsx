@@ -5,8 +5,8 @@ import Card from '@/components/card';
 import { useEffect, useState } from 'react';
 import { Movie, getMovies } from './api/route';
 import { CircularProgress } from '@mui/material';
-import { InView, useInView } from 'react-intersection-observer';
-import ScrollToTop from '@/components/scrollToTop';
+import { useInView } from 'react-intersection-observer';
+import Search from '@/components/search';
 
 export default function MoviesPage({
   params: { movies },
@@ -17,7 +17,7 @@ export default function MoviesPage({
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const { ref, inView, entry } = useInView({ threshold: 0 });
+  const { ref, inView } = useInView({ threshold: 0 });
   //const breadcrumb = movies.toString().toLocaleUpperCase();
   //console.log("entry", entry)
 
@@ -26,6 +26,10 @@ export default function MoviesPage({
       fetchMovies();
     }
   }, [inView]);
+
+  const onValueChange = (value: string) => {
+    console.log("value", value);
+  }
 
   const fetchMovies = async () => {
     setLoading(true);
@@ -43,6 +47,7 @@ export default function MoviesPage({
   return (
     <>
       <Breadcrumb title="Movies" />
+      <Search onChangeValue={onValueChange} />
       <div className='container mx-auto p-5'>
         {loading ? (
           <div className='text-center'>
@@ -62,7 +67,6 @@ export default function MoviesPage({
         </div>
         <div ref={ref}>{inView}</div>
       </div>
-      <ScrollToTop />
     </>
   );
 }

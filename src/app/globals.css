@@ -35,3 +35,23 @@ body {
 .footer {
   background: var(--background-second);
 }
+
+.search-section {
+  background: var(--background-primary);
+}
+
+.search-fixed {
+  position: fixed;
+  top: 0;
+  animation: topCorner 1s ease-in-out;
+}
+
+@keyframes topCorner {
+  from {
+    top: -88px;
+  }
+  to {
+    top: 0;
+  }
+}
+

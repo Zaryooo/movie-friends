@@ -1,12 +1,24 @@
+'use client';
+
 import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
-export const metadata: Metadata = {
-  title: 'Movie Friends',
-  description: 'Created by Zarko Petrov',
-};
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#1976d2',
+      light: '#42a5f5',
+      dark: '#42a5f5'
+    }
+  },
+});
+
 
 export default function RootLayout({
   children,
@@ -15,6 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
+      <ThemeProvider theme={darkTheme}>
       <body>
         <header className='header'>
           <Header/>
@@ -26,6 +39,7 @@ export default function RootLayout({
           <Footer/>
         </footer>
       </body>
+      </ThemeProvider>
     </html>
   );
 }

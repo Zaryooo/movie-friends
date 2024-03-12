@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { getMoviesDetails } from './api/route';
 import { Movie } from '../api/route';
-import { Button, CircularProgress, Rating } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import Breadcrumb from '@/components/breadcrumb';
 import Popularity from '@/components/popularity';
 
@@ -20,7 +20,6 @@ export default function MovieDetailsPage({
   const fetchMovieDetails = async () => {
     setLoading(true);
     const details = await getMoviesDetails(id);
-    console.log('details', details);
     if (details) {
         setMovie(details);
       setLoading(false);
