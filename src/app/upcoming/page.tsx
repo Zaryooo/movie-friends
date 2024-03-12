@@ -3,12 +3,12 @@
 import Breadcrumb from '@/components/breadcrumb';
 import Card from '@/components/card';
 import { useEffect, useState } from 'react';
-import { Movie, getMovies } from './api/route';
 import { CircularProgress } from '@mui/material';
-import { InView, useInView } from 'react-intersection-observer';
+import { useInView } from 'react-intersection-observer';
 import ScrollToTop from '@/components/scrollToTop';
+import { Movie, getUpcomingMovies } from '../movies/api/route';
 
-export default function MoviesPage({
+export default function PopularPage({
   params: { movies },
 }: {
   params: { movies: string };
@@ -16,6 +16,7 @@ export default function MoviesPage({
   const [result, setResult] = useState<Array<Movie>>([]);
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
+
 
   const { ref, inView, entry } = useInView({ threshold: 0 });
   //const breadcrumb = movies.toString().toLocaleUpperCase();
@@ -30,19 +31,17 @@ export default function MoviesPage({
   const fetchMovies = async () => {
     setLoading(true);
     const next = page + 1;
-    const result = await getMovies(page, movies);
+    const result = await getUpcomingMovies(page, movies);
     if (result?.length) {
       setPage(next);
       setResult((prev) => [...(prev?.length ? prev : []), ...result]);
       setLoading(false);
-    } else {
-      throw new Error("Something is wrong!")
     }
   };
 
   return (
     <>
-      <Breadcrumb title="Movies" />
+      <Breadcrumb title="Upcoming" />
       <div className='container mx-auto p-5'>
         {loading ? (
           <div className='text-center'>

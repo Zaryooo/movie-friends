@@ -3,10 +3,10 @@
 import Breadcrumb from '@/components/breadcrumb';
 import Card from '@/components/card';
 import { useEffect, useState } from 'react';
-import { Movie, getMovies } from './api/route';
 import { CircularProgress } from '@mui/material';
-import { InView, useInView } from 'react-intersection-observer';
+import { useInView } from 'react-intersection-observer';
 import ScrollToTop from '@/components/scrollToTop';
+import { Movie, getPopularMovies } from '../movies/api/route';
 
 export default function PopularPage({
   params: { movies },
@@ -31,7 +31,7 @@ export default function PopularPage({
   const fetchMovies = async () => {
     setLoading(true);
     const next = page + 1;
-    const result = await getMovies(page, movies);
+    const result = await getPopularMovies(page, movies);
     if (result?.length) {
       setPage(next);
       setResult((prev) => [...(prev?.length ? prev : []), ...result]);

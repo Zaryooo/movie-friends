@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 export interface Movie {
   id: string;
@@ -21,9 +21,9 @@ export default function Card({id, title, overview, poster_path }: Movie) {
                 className='w-full'
               />
               </Link>
-              <div className='flex flex-row content-center'>
+              <div className='flex flex-row'>
                 <h2 className='py-2 font-bold flex-1'>{title}</h2>
-                <Link href={`movies/${id}`} title={`${title} Details`}>Details</Link>
+                <Link href={`movies/${id}`} title={`${title} Details`} className='p-2'><InfoOutlinedIcon sx={{ color: '#1976d2' }}/></Link>
               </div>
                 <p className='py-2 text-xs'>{overview}</p>
             </div>

@@ -1,18 +1,15 @@
-import { MoviesType } from '@/app/[movies]/api/route';
-
 interface BreadcrumbProps {
-    title: string;
+    title?: string;
     children?: React.ReactNode
 }
 
 export default function Breadcrumb({title, children}: BreadcrumbProps) {
 
-
   return (
     <>
       <div className='breadcrumb relative'>
         <div className='container mx-auto p-5'>
-          <h1 className='text-center text-3xl font-bold my-4'>{title}</h1>
+          <h1 className='text-center text-3xl font-bold mt-7 mb-3'>{title}</h1>
           <div className='mx-auto text-center'>
             {children}
           </div>
