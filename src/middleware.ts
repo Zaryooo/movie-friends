@@ -16,13 +16,4 @@ export function middleware(request: NextRequest) {
     }
 
     return response;
-    //return NextResponse.redirect(new URL("/", request.url))
 }
-
-// export const config = {
-//     matcher: ['/movies/:path*', '/popular/:path*'],
-//   }
-
-// export const config = {
-//     matcher: "/profile"
-// }

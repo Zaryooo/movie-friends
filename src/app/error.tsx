@@ -12,7 +12,6 @@ export default function ErrorBoundary({
   return (
     <div>
       <Breadcrumb title={error.message}><button onClick={reset}>Try again</button></Breadcrumb>
-      
     </div>
   );
 }

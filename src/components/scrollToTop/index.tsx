@@ -9,7 +9,7 @@ export default function scrollToTop() {
   }
 
   return (
-    <Button className='fixed bottom-0 py-2 px-3 m-7' variant="contained" onClick={scrollToTop}>
+    <Button className='py-2 px-3' variant="outlined" onClick={scrollToTop}>
       Go To top
     </Button>
   );
