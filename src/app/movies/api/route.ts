@@ -57,7 +57,7 @@ export async function getMovies(page: number, movies: string, params?: QueryPara
   }
 }
 
-export async function getSearchMovies(page: number, query?: string) {
+export async function getSearchMovies(page: number, query: string) {
   const options = {
     method: 'GET',
     headers: {
