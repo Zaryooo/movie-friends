@@ -34,14 +34,10 @@ export async function getMovies(page: number, movies: string, params?: QueryPara
       Authorization: authToken,
     },
   };
-  let url = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`;
+  movies = movies.replace(" ", "_");
 
-  if(movies === 'popular') {
-    url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`;
-  }
-  if(movies === 'upcoming') {
-    url = `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${page}`;
-  }
+  let url = `https://api.themoviedb.org/3/movie/${movies}?language=en-US&page=${page}`;
+
   if(params?.genres) {
     url = `https://api.themoviedb.org/3/discover/movie?language=en-US&page=${page}&with_genres=${params.genres}`;
   }
