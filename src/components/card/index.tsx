@@ -25,7 +25,7 @@ export default function Card({id, title, overview, poster_path }: Movie) {
                 <h2 className='py-2 font-bold flex-1 text-xl'>{title}</h2>
                 <Link href={`movies/${id}`} title={`${title} Details`} className='p-2'><InfoOutlinedIcon sx={{ color: '#1976d2' }}/></Link>
               </div>
-                <p className='py-2 text-sm'>{overview.split(" ", 15).join(" ").concat("... ")}<Link href={`movies/${id}`} title={`${title} Details`} style={{color: '#1976d2'}}>more</Link></p>
+                <p className='py-2 text-sm'>{overview?.split(" ", 15).join(" ").concat("... ")}<Link href={`movies/${id}`} title={`${title} Details`} style={{color: '#1976d2'}}>more</Link></p>
             </div>
     </>
 }

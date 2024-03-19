@@ -10,7 +10,6 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 export default function Search(params: {
-  onKeywordHandler: (event: string) => void;
   onGenresHandler: (number: number) => void;
 }) {
   const searchParams = useSearchParams();
@@ -19,19 +18,18 @@ export default function Search(params: {
   const { ref, inView } = useInView({ threshold: 1 });
 
   const debouncedSearch = debounce((value: string) => {
-    params.onKeywordHandler(value)
-  }, 1000);
-
-  const handleInputChange = (value:string) => {
-    debouncedSearch(value);
     const params = new URLSearchParams(searchParams);
     if (value) {
       params.set('query', value);
     } else {
       params.delete('query');
     }
-
     replace(`${pathname}?${params.toString()}`);
+  }, 1000);
+
+  const handleInputChange = (value:string) => {
+    debouncedSearch(value);
+    
   };
 
   return (
@@ -42,7 +40,7 @@ export default function Search(params: {
             inView ? 'search-static' : 'search-fixed'
           }`}
         >
-          <div className='pb-5'>
+          <div className='container mx-auto px-5 pb-5 pt-3'>
             <div className='flex justify-between items-end'>
               <div className='flex'>
                 <div className='flex items-end mr-5'>
@@ -62,7 +60,7 @@ export default function Search(params: {
                   />
                 </div>
               </div>
-              <div className='flex min-w-[150px]'>{!inView && <ScrollToTop />}</div>
+              <div className='flex'>{!inView && <ScrollToTop />}</div>
             </div>
           </div>
         </div>

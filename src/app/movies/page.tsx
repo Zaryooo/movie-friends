@@ -7,6 +7,7 @@ import { Movie, QueryParams, getMovies, getSearchMovies } from './api/route';
 import { CircularProgress } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
 import Search from '@/components/search';
+import { useSearchParams } from 'next/navigation';
 
 export default function MoviesPage({
   params: { movies },
@@ -18,6 +19,13 @@ export default function MoviesPage({
   const [loading, setLoading] = useState<boolean>(true);
   const [firstLoad, setFirstLoad] = useState<boolean>(true);
   const { ref, inView } = useInView({ threshold: 0 });
+  const searchParams = useSearchParams();
+  const query = new URLSearchParams(searchParams).get("query");
+
+  useEffect(() => {
+      setResult([]);
+      fetchMovies();
+  }, [query])
 
   useEffect(() => {
     if (inView) {
@@ -33,17 +41,10 @@ export default function MoviesPage({
     };
   }
 
-  const onKeywordHandler = (value: string) => {
-    if(value){
-      setResult([]);
-      fetchMovies({query: value});
-    };
-  };
-
   const fetchMovies = async (params?: QueryParams) => {
     setLoading(true);
     const next = page + 1;
-    const result = params?.query ? await getSearchMovies(page, params?.query) : await getMovies(page, movies, params);
+    const result = query ? await getSearchMovies(page, query) : await getMovies(page, movies, params);
     if (result?.length) {
       setPage(next);
       setResult((prev) => [...(prev?.length ? prev : []), ...result]);
@@ -55,7 +56,7 @@ export default function MoviesPage({
     <>
       <Breadcrumb title={movies} />
       <div className='container mx-auto px-5 py-2'>
-        <div className='min-h-[68px]'>{!firstLoad && <Search onKeywordHandler={onKeywordHandler} onGenresHandler={onGenresHandler} />}</div>
+        <div className='min-h-[68px]'>{!firstLoad && <Search onGenresHandler={onGenresHandler} />}</div>
         <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
           {result?.length ? result.map(({ id, title, overview, poster_path }: Movie) => (
             <Card
@@ -67,12 +68,12 @@ export default function MoviesPage({
             />
           )) : null}
         </div>
-        <div ref={ref}>{inView}</div>
         {loading && (
           <div className='text-center mb-7'>
             <CircularProgress />
           </div>
         )}
+        {!loading && <div ref={ref}>{inView}</div>}
       </div>
     </>
   );
