@@ -22,16 +22,20 @@ export default function MoviesPage({
   const searchParams = useSearchParams();
   const query = new URLSearchParams(searchParams).get("query");
 
+  
   useEffect(() => {
       setResult([]);
       fetchMovies();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
 
+  
   useEffect(() => {
     if (inView) {
       fetchMovies();
     }
     setFirstLoad(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
   const onGenresHandler = (value: number) => {

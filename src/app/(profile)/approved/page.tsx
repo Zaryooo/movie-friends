@@ -19,7 +19,7 @@ export default function ApporvedPage() {
             createNewSession(token);
             //router.push('/');
         }
-    }, []);
+    }, [token, approved]);
   
         
     const createNewSession = async (token:string) => {

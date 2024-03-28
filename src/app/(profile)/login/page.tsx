@@ -12,33 +12,21 @@ import {
   TextField,
 } from '@mui/material';
 import Breadcrumb from '@/components/breadcrumb';
-import { useEffect, useState } from 'react';
-import { createSession, getNewToken } from '../api/route';
+import { getNewToken } from '../api/route';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [token, setToken] = useState<{
-    request_token: string;
-  }>({
-    request_token: '',
-  });
 
   const fetchToken = async () => {
-    const token = await getNewToken();
+    const { request_token: token } = await getNewToken();
     if (token) {
-      setToken(token);
       router.push(
-        `https://www.themoviedb.org/authenticate/${token.request_token}?redirect_to=http://localhost:3000/approved`
+        `https://www.themoviedb.org/authenticate/${token}?redirect_to=http://localhost:3000/approved`
       );
+    } else {
+        router.push("/login");
     }
-  };
-
-  console.log('TOKEN', token.request_token);
-
-  const createSession = async (token: string) => {
-    const sessionId = await createSession(token);
-    console.log(sessionId);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
