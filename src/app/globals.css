@@ -6,6 +6,7 @@
   --foreground-color: #fff;
   --background-primary: #181818;
   --background-second: #1d1d1d;
+  --background-blue: #1976d2;
 }
 
 body {
@@ -38,6 +39,10 @@ body {
 
 .search-section {
   background: var(--background-primary);
+}
+
+.btn-submit {
+  background: var(--background-blue);
 }
 
 .search-fixed {

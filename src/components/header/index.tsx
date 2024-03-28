@@ -19,7 +19,7 @@ export default function Header() {
           </div>
           <Navigation />
           <div className='flex leading-9'>
-            <h1>Login</h1>
+          <Link href="/login">Login</Link>
           </div>
         </div>
       </div>

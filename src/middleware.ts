@@ -1,6 +1,7 @@
+import { NextApiRequest } from 'next';
 import { NextResponse, type NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function middleware(request: NextRequest, req: NextApiRequest) {
     const response = NextResponse.next()
 
     const themePreference = request.cookies.get("theme");
