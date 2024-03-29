@@ -1,6 +1,6 @@
 import MoviesPage from '../movies/page';
 
-export default function Home(children: React.ReactNode) {
+export default function Home() {
   return (
       <div>
         <MoviesPage params={{movies: "upcoming"}} />

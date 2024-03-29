@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { createSession } from '../api/route';
+import { createSession } from '../api/callbacks';
 import Breadcrumb from '@/components/breadcrumb';
 
 export default function ApporvedPage() {

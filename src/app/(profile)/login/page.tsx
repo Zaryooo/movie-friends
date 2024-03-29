@@ -12,7 +12,7 @@ import {
   TextField,
 } from '@mui/material';
 import Breadcrumb from '@/components/breadcrumb';
-import { getNewToken } from '../api/route';
+import { getNewToken } from '../api/callbacks';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {

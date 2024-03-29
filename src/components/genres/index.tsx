@@ -1,6 +1,6 @@
 'use client';
 
-import { getGenres } from '@/app/movies/api/route';
+import { getGenres } from '@/app/movies/api/callbacks';
 import { Autocomplete, Stack, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 

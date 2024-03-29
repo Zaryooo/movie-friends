@@ -1,4 +1,4 @@
-import { ErrorBoundary, ErrorBoundaryProps } from 'next/dist/client/components/error-boundary';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 
 export type Token = {
     request_token: string;
@@ -8,7 +8,7 @@ const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYzg4MmIzYzRhY2E5YzI0ZDZhN
 const API_TOKEN = `https://api.themoviedb.org/3/authentication/token/new`;
 const API_SESSION = `https://api.themoviedb.org/3/authentication/session/new`;
 
-export async function getNewToken(): Promise<Token> {
+export async function getNewToken() {
   const options = {
     method: 'GET',
     headers: {
