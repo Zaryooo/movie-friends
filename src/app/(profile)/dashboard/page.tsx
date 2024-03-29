@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
+import { FC, Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createSession } from '../api/callbacks';
 import Breadcrumb from '@/components/breadcrumb';
+import { CircularProgress } from '@mui/material';
 
-export default function ApporvedPage() {
+export function Dashboard(): React.ReactElement {
     const router = useRouter();
     const searchParams = useSearchParams();
     const approved = new URLSearchParams(searchParams).get("approved");
@@ -29,5 +30,13 @@ export default function ApporvedPage() {
 
     return (
         <Breadcrumb title="Dashboard"/>
+    )
+}
+
+export default function DashboardPage() {
+    return (
+        <Suspense fallback={<CircularProgress/>}>
+            <Dashboard />
+        </Suspense>
     )
 }

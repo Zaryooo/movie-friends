@@ -2,14 +2,14 @@
 
 import Breadcrumb from '@/components/breadcrumb';
 import Card from '@/components/card';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Movie, QueryParams, getMovies, getSearchMovies } from './api/callbacks';
 import { CircularProgress } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
 import Search from '@/components/search';
 import { useSearchParams } from 'next/navigation';
 
-export default function MoviesPage({
+export function Movies({
   params: { movies },
 }: {
   params: { movies: string };
@@ -22,14 +22,12 @@ export default function MoviesPage({
   const searchParams = useSearchParams();
   const query = new URLSearchParams(searchParams).get("query");
 
-  
   useEffect(() => {
       setResult([]);
       fetchMovies();
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
 
-  
   useEffect(() => {
     if (inView) {
       fetchMovies();
@@ -81,4 +79,16 @@ export default function MoviesPage({
       </div>
     </>
   );
+}
+
+export default function MoviesPage({
+  params: { movies },
+}: {
+  params: { movies: string };
+}) {
+  return (
+    <Suspense fallback={<CircularProgress/>}>
+      <Movies params={{movies}}/>
+    </Suspense>
+  )
 }
