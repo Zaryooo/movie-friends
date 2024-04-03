@@ -7,6 +7,12 @@ import { Login } from '@mui/icons-material';
 import LoginPage from './(profile)/login/page';
 import { CircularProgress } from '@mui/material';
 
-export default function Home() {
-  return <MoviesPage movies="now playing"/>
-}
+export default function Home({ children }: { children: React.ReactNode }) {
+    const {data: session, status: status } = useSession();
+  
+    console.log("SESSION", session)
+    return <>{status === 'loading' && <CircularProgress />}
+    {session ? children : <LoginPage/>}
+    </>
+  }
+  

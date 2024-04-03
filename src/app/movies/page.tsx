@@ -13,7 +13,7 @@ interface MovieType {
   movies: string;
 }
 
-export default function Movies({movies}: MovieType) {
+function Movies({movies = 'now playing'}: MovieType) {
   const [result, setResult] = useState<Array<Movie>>([]);
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
@@ -80,3 +80,12 @@ export default function Movies({movies}: MovieType) {
     </>
   );
 }
+
+export default function MoviesPage({movies}: MovieType) {
+  
+  return (
+    <Suspense fallback={<CircularProgress/>}>
+      <Movies movies={movies}/>
+    </Suspense>
+  )
+}     
