@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { signOut } from "next-auth/react"
 
 export default function Header() {
-  const {data: session } = useSession()
+  const { data: session, status: status } = useSession();
   
   return (
     <>
@@ -23,7 +23,7 @@ export default function Header() {
           </div>
           {session && <Navigation />}
           <div className='flex leading-9'>
-          {session ? <button onClick={() => signOut()}>Logout</button>: <Link href="/login">Login</Link>}
+          {session && status === 'authenticated' ? <button onClick={() => signOut({redirect: true, callbackUrl: "/"})}>Logout</button> : <Link href="/login">Login</Link>}
           </div>
         </div>
       </div>

@@ -25,7 +25,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <Breadcrumb title='Login' />
+      <Breadcrumb title='Sign Up' />
       <Container component='div' maxWidth='xs'>
         <CssBaseline />
         <Box
@@ -82,7 +82,7 @@ export default function LoginPage() {
               sx={{ mt: 3, mb: 2 }}
               disabled={!email || !password}
             >
-              Register
+              Sign Up
             </Button>
           </Box>
         </Box>

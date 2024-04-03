@@ -18,7 +18,7 @@ export default function Search(params: {
   const { ref, inView } = useInView({ threshold: 1 });
 
   const debouncedSearch = debounce((value: string) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams ? searchParams : '');
     if (value) {
       params.set('query', value);
     } else {
@@ -53,7 +53,7 @@ export default function Search(params: {
                     label='Search'
                     variant='standard'
                     fullWidth
-                    defaultValue={searchParams.get("query"?.toString()) || ''}
+                    defaultValue={searchParams?.get("query"?.toString()) || ''}
                     onChange={(event) =>
                       handleInputChange(event.target.value)
                     }
