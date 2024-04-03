@@ -9,18 +9,18 @@ import { useInView } from 'react-intersection-observer';
 import Search from '@/components/search';
 import { useSearchParams } from 'next/navigation';
 
-export function Movies({
-  params: { movies },
-}: {
-  params: { movies: string };
-}) {
+interface MovieType {
+  movies: string;
+}
+
+export default function Movies({movies}: MovieType) {
   const [result, setResult] = useState<Array<Movie>>([]);
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const [firstLoad, setFirstLoad] = useState<boolean>(true);
   const { ref, inView } = useInView({ threshold: 0 });
   const searchParams = useSearchParams();
-  const query = new URLSearchParams(searchParams).get("query");
+  const query = new URLSearchParams(searchParams ? searchParams : '').get("query");
 
   useEffect(() => {
       setResult([]);
@@ -79,16 +79,4 @@ export function Movies({
       </div>
     </>
   );
-}
-
-export default function MoviesPage({
-  params: { movies },
-}: {
-  params: { movies: string };
-}) {
-  return (
-    <Suspense fallback={<CircularProgress/>}>
-      <Movies params={{movies}}/>
-    </Suspense>
-  )
 }

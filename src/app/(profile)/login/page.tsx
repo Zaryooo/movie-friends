@@ -12,32 +12,13 @@ import {
   TextField,
 } from '@mui/material';
 import Breadcrumb from '@/components/breadcrumb';
-import { getNewToken } from '../api/callbacks';
-import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import { useState } from 'react';
 
 export default function LoginPage() {
-  const router = useRouter();
 
-  const fetchToken = async () => {
-    const { request_token: token } = await getNewToken();
-    if (token) {
-      router.push(
-        `https://www.themoviedb.org/authenticate/${token}?redirect_to=http://localhost:3000/approved`
-      );
-    } else {
-        router.push("/login");
-    }
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    fetchToken();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <>
@@ -53,9 +34,7 @@ export default function LoginPage() {
           }}
         >
           <Box
-            component='form'
-            onSubmit={handleSubmit}
-            noValidate
+            component='div'
             sx={{ mt: 1 }}
           >
             <TextField
@@ -67,6 +46,7 @@ export default function LoginPage() {
               name='email'
               autoComplete='email'
               autoFocus
+              onChange={(e: any) => setEmail(e.target.value)}
             />
             <TextField
               margin='normal'
@@ -77,19 +57,21 @@ export default function LoginPage() {
               type='password'
               id='password'
               autoComplete='current-password'
+              onChange={(e: any) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value='remember' color='primary' />}
               label='Remember me'
             />
             <Button
-              type='submit'
+              onClick={() => signIn('credentials', {email, password, redirect: true, callback: '/movies'})}
               fullWidth
               variant='contained'
               className='btn-submit'
               sx={{ mt: 3, mb: 2 }}
+              disabled={!email || !password}
             >
-              Sign In
+              Login
             </Button>
             <Grid container>
               <Grid item xs>
@@ -99,7 +81,7 @@ export default function LoginPage() {
               </Grid>
               <Grid item>
                 <Link href='/register' variant='body2'>
-                  {"Don't have an account? Sign Up"}
+                  {"Don't have an account? Register now!"}
                 </Link>
               </Grid>
             </Grid>

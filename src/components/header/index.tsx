@@ -1,8 +1,19 @@
 import Link from 'next/link';
 import Navigation from '../navigation';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/app/firebase';
 
 export default function Header() {
+  const session = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/login')
+    }
+  })
+  
   return (
     <>
       <div className='container mx-auto p-5'>
@@ -17,9 +28,9 @@ export default function Header() {
               priority
             /></Link>
           </div>
-          <Navigation />
+          {session && <Navigation />}
           <div className='flex leading-9'>
-          <Link href="/login">Login</Link>
+          {session ? <button onClick={() => signOut(auth)}>Logout</button>: <Link href="/login">Login</Link>}
           </div>
         </div>
       </div>

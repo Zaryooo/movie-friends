@@ -4,6 +4,7 @@ import './globals.css';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import SessionProvider from './SessionProvider';
 
 
 const darkTheme = createTheme({
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang='en'>
       <ThemeProvider theme={darkTheme}>
       <body>
+        <SessionProvider>
         <header className='header'>
           <Header/>
         </header>
@@ -36,6 +38,7 @@ export default function RootLayout({
         <footer className='footer'>
           <Footer/>
         </footer>
+        </SessionProvider>
       </body>
       </ThemeProvider>
     </html>
