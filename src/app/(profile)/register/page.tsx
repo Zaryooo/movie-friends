@@ -8,20 +8,33 @@ import {
   TextField,
 } from '@mui/material';
 import Breadcrumb from '@/components/breadcrumb';
-import { signIn } from 'next-auth/react';
-import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/app/firebase';
+import { auth } from '@/lib/firebase';
+import { useFormik } from 'formik';
+import { formSchema } from '@/schemas/validation';
+
+type formTypes = {
+  email: string,
+  password: string,
+  confimPassword: string
+}
 
 export default function LoginPage() {
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordAgain, setPasswordAgain] = useState('');
 
-  const onSubmitHandler = () => {
-    createUserWithEmailAndPassword(auth, email, password);
-  };
+  const onSubmit = (values: formTypes) => {
+    createUserWithEmailAndPassword(auth, values.email, values.password);
+  }
+
+  const {values, errors, touched, isSubmitting, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      confimPassword: ''
+    },
+    validationSchema: formSchema,
+    onSubmit
+  })
 
   return (
     <>
@@ -39,6 +52,7 @@ export default function LoginPage() {
           <Box
             component='form'
             noValidate
+            onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
             <TextField
@@ -50,7 +64,11 @@ export default function LoginPage() {
               name='email'
               autoComplete='email'
               autoFocus
-              onChange={(e: any) => setEmail(e.target.value)}
+              value={values.email}
+              error={errors.email && touched.email ? true : false}
+              helperText={errors.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
             <TextField
               margin='normal'
@@ -61,26 +79,34 @@ export default function LoginPage() {
               type='password'
               id='password'
               autoComplete='current-password'
-              onChange={(e: any) => setPassword(e.target.value)}
+              value={values.password}
+              error={errors.password && touched.password ? true : false}
+              helperText={errors.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
             <TextField
               margin='normal'
               required
               fullWidth
-              name='passwordAgain'
-              label='Password Again'
+              name='confimPassword'
+              label='Confirm Password'
               type='password'
-              id='passwordAgain'
+              id='confimPassword'
               autoComplete='current-password'
-              onChange={(e: any) => setPasswordAgain(e.target.value)}
+              value={values.confimPassword}
+              error={errors.confimPassword && touched.confimPassword ? true : false}
+              helperText={errors.confimPassword}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
             <Button
-              onClick={onSubmitHandler}
+              type="submit"
               fullWidth
               variant='contained'
               className='btn-submit'
               sx={{ mt: 3, mb: 2 }}
-              disabled={!email || !password}
+              disabled={isSubmitting}
             >
               Sign Up
             </Button>

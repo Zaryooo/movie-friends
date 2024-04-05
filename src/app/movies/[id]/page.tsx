@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { getMoviesDetails } from './api/callbacks';
-import { Movie } from '../api/callbacks';
+import { getMoviesDetails } from '@/utils/getMovieDetails';
+import { Movie } from '@/lib/movies';
 import { Button, CircularProgress } from '@mui/material';
 import Breadcrumb from '@/components/breadcrumb';
 import Popularity from '@/components/popularity';

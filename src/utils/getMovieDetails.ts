@@ -2,7 +2,6 @@ import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 
 export async function getMoviesDetails(id: string) {
 
-  console.log("TOKEN", process.env.TOKEN)
     const options = {
       method: 'GET',
       headers: {

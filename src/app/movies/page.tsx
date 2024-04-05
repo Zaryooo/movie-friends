@@ -4,18 +4,18 @@ import Breadcrumb from '@/components/breadcrumb';
 import Card from '@/components/card';
 import { Suspense, useEffect, useState } from 'react';
 import {
-  Movie,
   QueryParams,
   getMovies,
   getSearchMovies,
-} from './api/callbacks';
+} from '@/utils/getMovies';
 import { CircularProgress } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
 import Search from '@/components/search';
-import { redirect, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import LoginPage from '../(profile)/login/page';
 import Loading from '@/components/loading';
+import { Movie } from '@/lib/movies';
 
 interface MovieType {
   movies: string;

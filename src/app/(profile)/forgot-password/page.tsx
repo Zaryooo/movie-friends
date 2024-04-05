@@ -10,7 +10,7 @@ import {
 import Breadcrumb from '@/components/breadcrumb';
 import { useState } from 'react';
 import { sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from '@/app/firebase';
+import { auth } from '@/lib/firebase';
 
 export default function ForgotPasswordPage() {
 

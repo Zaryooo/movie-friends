@@ -9,9 +9,6 @@ export function middleware(request: NextRequest, req: NextApiRequest) {
         response.cookies.set("theme", "dark");
     }
 
-    response.headers.set("custom-header", "custom-value");
-
-    
     if (request.nextUrl.pathname === "/movies") {
         return NextResponse.redirect(new URL("/", request.url));
     }

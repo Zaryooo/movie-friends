@@ -3,22 +3,6 @@ import ErrorBoundary from '@/app/error';
 export const authToken =
   'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYzg4MmIzYzRhY2E5YzI0ZDZhNDQwNzlkNjVjZGFlMSIsInN1YiI6IjY1ZTljZTBlMzM5NmI5MDE4Njg0YmIwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JXVg7S3Q6wSVphmGXZCkQksy_c6fFzAKPOeY_bpszzI';
 
-export interface Movie {
-  id: string;
-  title: string;
-  overview: string;
-  poster_path: string;
-  genres?: [
-    {
-      id: number;
-      name: string;
-    }
-  ];
-  release_date?: string;
-  popularity?: number;
-  imdb_id?: string;
-}
-
 
 export interface QueryParams {
   query?: string,
