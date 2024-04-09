@@ -23,7 +23,7 @@ export default function Header() {
           </div>
           {session && <Navigation />}
           <div className='flex leading-9'>
-          {session && status === 'authenticated' ? <button onClick={() => signOut({redirect: true, callbackUrl: "/"})}>Logout</button> : <Link href="/login">Login</Link>}
+          {session && status === 'authenticated' ? <button onClick={() => signOut({redirect: true, callbackUrl: "/login"})}>Logout</button> : null}
           </div>
         </div>
       </div>

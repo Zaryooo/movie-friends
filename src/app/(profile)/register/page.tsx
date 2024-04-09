@@ -12,6 +12,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useFormik } from 'formik';
 import { formSchema } from '@/schemas/validation';
+import { useRouter } from 'next/navigation';
 
 type formTypes = {
   email: string,
@@ -20,10 +21,11 @@ type formTypes = {
 }
 
 export default function LoginPage() {
-
+  const router = useRouter();
 
   const onSubmit = (values: formTypes) => {
     createUserWithEmailAndPassword(auth, values.email, values.password);
+    router.push('/login')
   }
 
   const {values, errors, touched, isSubmitting, handleBlur, handleChange, handleSubmit } = useFormik({

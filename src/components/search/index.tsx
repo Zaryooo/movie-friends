@@ -53,7 +53,7 @@ export default function Search(params: {
                     label='Search'
                     variant='standard'
                     fullWidth
-                    defaultValue={searchParams?.get("query"?.toString()) || ''}
+                    defaultValue={''}
                     onChange={(event) =>
                       handleInputChange(event.target.value)
                     }
